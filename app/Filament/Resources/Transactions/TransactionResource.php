@@ -27,14 +27,13 @@ class TransactionResource extends Resource
 
     public static function table(Table $table): Table
     {
+        // Wajib diarahkan ke TransactionsTable
         return TransactionsTable::configure($table);
     }
 
     public static function getRelations(): array
     {
-        return [
-            //
-        ];
+        return [];
     }
 
     public static function getPages(): array

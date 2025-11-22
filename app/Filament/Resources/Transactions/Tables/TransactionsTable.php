@@ -2,12 +2,11 @@
 
 namespace App\Filament\Resources\Transactions\Tables;
 
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
-use Filament\Actions\EditAction;
-use Filament\Tables\Columns\ImageColumn;
-use Filament\Tables\Columns\TextColumn;
+use Filament\Tables;
 use Filament\Tables\Table;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\ImageColumn;
+use Filament\Tables\Actions\EditAction;  // Tambahkan ini
 
 class TransactionsTable
 {
@@ -16,50 +15,40 @@ class TransactionsTable
         return $table
             ->columns([
                 TextColumn::make('code')
-                    ->label("Code")
-                    ->searchable(),
+                    ->label('Code')
+                    ->searchable()
+                    ->sortable(),
 
-                TextColumn::make('users.name')
-                    ->label("User Name")
+                TextColumn::make('user.name')
+                    ->label('User')
+                    ->sortable()
                     ->searchable(),
-
-                TextColumn::make('users.phone')
-                    ->label("Phone"),
 
                 TextColumn::make('payment_method')
-                    ->label("Payment Method"),
+                    ->label('Payment Method'),
 
                 TextColumn::make('payment_status')
+                    ->label('Payment Status')
                     ->badge()
-                    ->color(fn ($state) => match ($state) {
-                        'PENDING' => 'warning',
-                        'COMPLETED' => 'success',
-                        'FAILED' => 'danger',
-                        default => 'secondary',
-                    }),
+                    ->colors([
+                        'warning' => 'PENDING',
+                        'success' => 'PAID',
+                    ]),
 
-                // FIX: gunakan relasi departement
+                ImageColumn::make('payment_proof')
+                    ->label('Bukti Pembayaran')
+                    ->size(50),
+
                 TextColumn::make('departement.name')
-                    ->label("Departement"),
-
-                TextColumn::make('departement.semester')
-                    ->label("Semester")
-                    ->searchable(),
+                    ->label('Departement'),
 
                 TextColumn::make('departement.cost')
-                    ->label("Cost")
-                    ->money("IDR"),
+                    ->label('Cost')
+                    ->money('IDR'),
             ])
-            ->filters([
-                //
-            ])
-            ->recordActions([
-                EditAction::make(),
-            ])
-            ->toolbarActions([
-                BulkActionGroup::make([
-                    DeleteBulkAction::make(),
-                ]),
+
+            ->actions([
+                EditAction::make(),  // Ubah dari Tables\Actions\EditAction::make()
             ]);
     }
 }

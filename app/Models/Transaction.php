@@ -16,7 +16,7 @@ class Transaction extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
-     public function departements()
+     public function departement()
     {
         return $this->belongsTo(Departement::class, 'departement_id');
     }
