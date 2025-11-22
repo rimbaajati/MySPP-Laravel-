@@ -6,7 +6,6 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\ImageColumn;
-use Filament\Tables\Actions\EditAction;  // Tambahkan ini
 
 class TransactionsTable
 {
@@ -45,10 +44,6 @@ class TransactionsTable
                 TextColumn::make('departement.cost')
                     ->label('Cost')
                     ->money('IDR'),
-            ])
-
-            ->actions([
-                EditAction::make(),  // Ubah dari Tables\Actions\EditAction::make()
             ]);
     }
 }
